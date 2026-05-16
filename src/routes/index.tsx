@@ -39,7 +39,7 @@ function Win({
   className?: string;
 }) {
   return (
-    <div className={`bevel-out p-[2px] ${className}`}>
+    <div className={`bevel-out p-[2px] mb-2 ${className}`}>
       <div className="titlebar">
         <span className="truncate">▓ {title}</span>
         <span className="flex gap-[2px]">
@@ -78,7 +78,7 @@ function AsciiBar({ value, label }: { value: number; label: string }) {
   const total = 20;
   const filled = Math.round((value / 100) * total);
   return (
-    <div className="font-[family-name:var(--font-mono-retro)] text-[13px] leading-tight">
+    <div className="retro-mono text-[13px] leading-tight">
       <div className="flex justify-between">
         <span>{label}</span>
         <span>{value}%</span>
@@ -113,10 +113,10 @@ function Index() {
         aria-hidden
         className="kanji-watermark crt-flicker"
         style={{
-          top: "8%",
+          top: "6%",
           left: "50%",
           transform: "translateX(-50%)",
-          fontSize: "min(46vw, 720px)",
+          fontSize: "min(44vw, 680px)",
           lineHeight: 1,
           letterSpacing: "-0.08em",
         }}
@@ -127,10 +127,10 @@ function Index() {
         aria-hidden
         className="kanji-watermark"
         style={{
-          top: "2%",
+          top: "1%",
           left: "1%",
           writingMode: "vertical-rl",
-          fontSize: "120px",
+          fontSize: "110px",
           letterSpacing: "0.1em",
         }}
       >
@@ -140,13 +140,13 @@ function Index() {
         aria-hidden
         className="kanji-watermark pixel"
         style={{
-          bottom: "10%",
+          bottom: "8%",
           left: "0",
           right: "0",
           textAlign: "center",
-          fontSize: "42px",
+          fontSize: "40px",
           letterSpacing: "0.6em",
-          color: "rgba(0,0,0,0.09)",
+          color: "rgba(0,0,0,0.10)",
         }}
       >
         ネット端末遺伝子
@@ -160,7 +160,7 @@ function Index() {
           backgroundImage: `url(${mangaCollage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          opacity: 0.12,
+          opacity: 0.20,
           mixBlendMode: "multiply",
         }}
       />
@@ -169,7 +169,7 @@ function Index() {
       <div className="relative z-10 mx-auto max-w-[1280px] p-2 sm:p-4">
         {/* TOP MARQUEE */}
         <div className="hairline mb-2 bg-black text-[#0f0] overflow-hidden">
-          <div className="marquee-track py-[2px] px-2 font-[family-name:var(--font-mono-retro)] text-[14px]">
+          <div className="marquee-track py-[2px] px-2 retro-mono text-[15px]">
             ✦ SYSTEM_UPDATE: scanlation v.3.21 uploaded ✦ NEW: shojo gallery +47 thumbs ✦ WARNING: do not feed the
             mecha after midnight ✦ webring.exe synced @ 03:14 JST ✦ RIP geocities (1994-2009) we remember ✦
             now playing: 月光 — yoko kanno bootleg ✦
@@ -177,13 +177,13 @@ function Index() {
         </div>
 
         {/* HEADER */}
-        <Win title="C:\SHRINE\index.html — Microsoft Internet Explorer 5">
+        <Win title="C:\\SHRINE\\index.html — Microsoft Internet Explorer 5">
           <div className="grid grid-cols-12 gap-2">
             <div className="col-span-12 md:col-span-8">
               <div className="bevel-in p-3 relative scanlines">
-                <div className="pixel text-[10px] text-[#444]">// loading payload .... OK</div>
+                <div className="pixel text-[#444]">// loading payload .... OK</div>
                 <h1
-                  className="font-[family-name:var(--font-jp)] font-black tracking-tighter leading-none mt-1"
+                  className="retro-jp font-black tracking-tighter leading-none mt-1"
                   style={{ fontSize: "clamp(34px, 6vw, 72px)" }}
                 >
                   <span className="text-black">MANGA</span>
@@ -191,11 +191,11 @@ function Index() {
                   <span className="text-black">SHRINE</span>
                 </h1>
                 <div className="flex flex-wrap items-baseline gap-2 mt-1">
-                  <span className="font-[family-name:var(--font-jp)] text-[20px]">芸術 ・ マンガ ・ 端末</span>
-                  <span className="pixel text-[#666]">v3.21 // build 19980422</span>
+                  <span className="retro-jp text-[20px]">芸術 ・ マンガ ・ 端末</span>
+                  <span className="pixel text-[#444]">v3.21 // build 19980422</span>
                 </div>
-                <p className="mt-2 font-[family-name:var(--font-mono-retro)] text-[15px] leading-snug">
-                  &gt; a personal archive of <span className="bg-[#ffff66]">2D cel-shaded</span>{" "}
+                <p className="mt-2 retro-mono text-[16px] leading-snug">
+                  &gt; a personal archive of <span className="bg-[#ffff66] text-black px-[2px]">2D cel-shaded</span>{" "}
                   hand-drawn panels, mecha schematics, shojo sketches &amp; vintage scanlations
                   rescued from dying floppies. handcoded with love &amp; notepad.exe.
                 </p>
@@ -207,7 +207,7 @@ function Index() {
                 <div className="pixel text-[#444]">VISITOR COUNT</div>
                 <div className="counter-glow text-[26px] font-bold">00133754</div>
                 <div className="pixel text-[#444]">UR VISITOR № 00133755</div>
-                <div className="text-[10px] font-[family-name:var(--font-pixel)]">
+                <div className="pixel text-[10px]">
                   best viewed @ 800×600 ✦ IE5+ ✦ JavaScript ON
                 </div>
                 <div className="text-4xl select-none" aria-hidden>
@@ -223,7 +223,7 @@ function Index() {
               <a
                 key={i}
                 href="#"
-                className="bevel-out bg-[#c0c0c0] px-3 py-1 font-[family-name:var(--font-sys)] text-[12px] font-bold hover:bg-[var(--accent-lime)] active:bevel-in"
+                className="bevel-out bg-[#c0c0c0] px-3 py-1 retro-sys text-[12px] font-bold hover:bg-[#c4e800] active:bevel-in"
               >
                 {n}
               </a>
@@ -239,7 +239,7 @@ function Index() {
           {/* LEFT SIDEBAR */}
           <aside className="col-span-12 md:col-span-3 space-y-2">
             <Win title="navigation.dll">
-              <ul className="font-[family-name:var(--font-mono-retro)] text-[15px] space-y-[2px]">
+              <ul className="retro-mono text-[15px] space-y-[2px]">
                 {[
                   ["» about_me.txt", "★"],
                   ["» manga_archive/", "▶"],
@@ -261,7 +261,7 @@ function Index() {
             </Win>
 
             <Win title="webring.swf">
-              <div className="text-center font-[family-name:var(--font-sys)] text-[11px]">
+              <div className="text-center retro-sys text-[11px]">
                 <div className="pixel text-[#444] mb-1">::: MANGA WEBRING #404 :::</div>
                 <div className="flex justify-center gap-1 text-[14px]">
                   <a href="#" className="win-link">« prev</a>
@@ -288,7 +288,7 @@ function Index() {
             </Win>
 
             <Win title="audio_player.exe">
-              <div className="bevel-in p-2 bg-[#0a0a18] text-[#0ff] font-[family-name:var(--font-mono-retro)] text-[13px] relative overflow-hidden">
+              <div className="bevel-in p-2 bg-[#0a0a18] text-[#0ff] retro-mono text-[13px] relative overflow-hidden">
                 <div className="flex justify-between text-[10px] text-[#0f0]">
                   <span>◈ MP3 ◈</span><span>128kbps</span>
                 </div>
@@ -312,13 +312,22 @@ function Index() {
                 <AsciiBar label="VIBES  " value={96} />
                 <AsciiBar label="LONELY " value={31} />
               </div>
+              <pre className="retro-mono text-[11px] text-[#444] mt-2 leading-none">
+{`     _
+   _| |_
+  |     |
+  |o   o|  webmaster
+  |  >  |  status:
+  | \_/ |  ALIVE
+   \___/`}
+              </pre>
             </Win>
           </aside>
 
           {/* CENTER CONTENT */}
           <main className="col-span-12 md:col-span-6 space-y-2">
             <Win title="blog.cgi — latest entries">
-              <div className="space-y-3 text-[14px] font-[family-name:var(--font-sys)]">
+              <div className="space-y-3 text-[14px] retro-sys">
                 {[
                   {
                     date: "1999/04/22 — 03:14 JST",
@@ -369,14 +378,14 @@ function Index() {
               <div className="bevel-in bg-white p-1">
                 <table className="w-full border-collapse text-[11px]" cellPadding={3}>
                   <thead>
-                    <tr className="bg-[var(--titlebar)] text-white pixel">
+                    <tr className="bg-[#000080] text-white pixel">
                       <th className="text-left border border-black px-1">FILE</th>
                       <th className="text-left border border-black">TITLE</th>
                       <th className="text-left border border-black">GENRE</th>
                       <th className="text-left border border-black">YR</th>
                     </tr>
                   </thead>
-                  <tbody className="font-[family-name:var(--font-mono-retro)] text-[14px]">
+                  <tbody className="retro-mono text-[14px]">
                     {[
                       [thumb4, "swrdboy_07.gif", "Lone Blade Vol.7", "shounen / action", "1994"],
                       [thumb2, "mecha_cp38.gif", "Project CP-38", "mecha / cyberpunk", "1987"],
@@ -384,8 +393,8 @@ function Index() {
                       [thumb5, "netgrl_v2.gif", "Net Terminal Girl", "cyberpunk", "1998"],
                       [thumb6, "magik_03.gif", "Magical Stardust 3", "mahou shojo", "1995"],
                       [thumb1, "chibi_h.gif", "Chibi Hours", "comedy / sd", "1999"],
-                    ].map(([img, file, title, genre, yr]) => (
-                      <tr key={file as string} className="hover:bg-[var(--accent-lime)] odd:bg-[#eee]">
+                    ].map(([img, file, title, genre, yr], idx) => (
+                      <tr key={file as string} className={`hover:bg-[#c4e800] ${idx % 2 === 0 ? "bg-[#eee]" : "bg-white"}`}>
                         <td className="border border-black align-top">
                           <div className="bevel-in p-[2px] inline-block bg-white">
                             <img
@@ -419,7 +428,7 @@ function Index() {
 
             <Win title="lore.txt — ネット端末遺伝子">
               <div className="grid grid-cols-3 gap-2">
-                <div className="col-span-2 bevel-in p-2 bg-[#fbfbf0] font-[family-name:var(--font-mono-retro)] text-[14px] leading-snug">
+                <div className="col-span-2 bevel-in p-2 bg-[#fbfbf0] retro-mono text-[14px] leading-snug">
                   <p>
                     &gt;&gt; <span className="font-bold">NET TERMINAL GENES</span> — fragments of a
                     transmission decoded from a discarded CRT found in akihabara, 1997. the boy with
@@ -433,19 +442,32 @@ function Index() {
                     please link back.
                   </p>
                 </div>
-                <div className="bevel-in p-2 text-center bg-[#222] text-[#0f0] font-[family-name:var(--font-mono-retro)]">
+                <div className="bevel-in p-2 text-center bg-[#222] text-[#0f0] retro-mono">
                   <div className="text-[60px] leading-none select-none">✟</div>
                   <div className="pixel mt-1">CRUCIFIX CHARM<br/>v.1.4</div>
                   <div className="text-[10px] mt-1">click to bless</div>
                 </div>
               </div>
             </Win>
+
+            <Win title="ascii_art.txt">
+              <pre className="retro-mono text-[12px] leading-none text-[#444] bg-[#fbfbf0] bevel-in p-2 overflow-x-auto">
+{`    ╔═══════════════════════════════════════╗
+    ║  M A N G A   //   S H R I N E   v3    ║
+    ╠═══════════════════════════════════════╣
+    ║  [█] mecha_schematics...........done  ║
+    ║  [█] shojo_sketches...............done  ║
+    ║  [░] seinen_translations.........wip   ║
+    ║  [█] webring_sync.................ok   ║
+    ╚═══════════════════════════════════════╝`}
+              </pre>
+            </Win>
           </main>
 
           {/* RIGHT SIDEBAR */}
           <aside className="col-span-12 md:col-span-3 space-y-2">
             <Win title="shoutbox.cgi">
-              <div className="bevel-in p-1 bg-white font-[family-name:var(--font-mono-retro)] text-[13px] h-56 overflow-hidden">
+              <div className="bevel-in p-1 bg-white retro-mono text-[13px] h-56 overflow-hidden">
                 {[
                   ["★miku★", "ur shrine made me cry T_T", "#aa0066"],
                   ["sword_brain", "ch.47 is PEAK btw", "#003366"],
@@ -465,7 +487,7 @@ function Index() {
               </div>
               <div className="mt-1 flex gap-1">
                 <input
-                  className="bevel-in flex-1 px-1 text-[12px] font-[family-name:var(--font-mono-retro)]"
+                  className="bevel-in flex-1 px-1 text-[12px] retro-mono bg-[#f0f0f0]"
                   placeholder="say something..."
                 />
                 <button className="bevel-out px-2 text-[11px] font-bold active:bevel-in">post!</button>
@@ -500,7 +522,7 @@ function Index() {
             </Win>
 
             <Win title="poll.cgi">
-              <div className="text-[13px] font-[family-name:var(--font-sys)] space-y-1">
+              <div className="text-[13px] retro-sys space-y-1">
                 <div className="font-bold">best genre? (vote!)</div>
                 {[
                   ["mecha / cyberpunk", 64],
@@ -529,7 +551,7 @@ function Index() {
             </Win>
 
             <Win title="awards.htm">
-              <div className="bevel-in p-2 text-center text-[11px] font-[family-name:var(--font-sys)]">
+              <div className="bevel-in p-2 text-center text-[11px] retro-sys">
                 <div className="pixel text-[#660000]">⛧ HALL OF SHRINES ⛧</div>
                 <div className="text-3xl mt-1">🏆</div>
                 <div className="mt-1">"best 1998 fansite"<br/>— webcrawler weekly</div>
@@ -540,7 +562,7 @@ function Index() {
         </div>
 
         {/* FOOTER */}
-        <div className="mt-2 bevel-out p-2 text-center font-[family-name:var(--font-mono-retro)] text-[13px] relative">
+        <div className="mt-2 bevel-out p-2 text-center retro-mono text-[13px] relative">
           <div className="flex flex-wrap justify-center gap-2 items-center">
             <Banner88 bg="#000" fg="#0f0">★ NEOCITIES</Banner88>
             <Banner88 bg="#fff" fg="#000">HTML 4.0 ✓</Banner88>
