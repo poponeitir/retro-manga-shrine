@@ -463,6 +463,16 @@ function Index() {
    \___/`}
               </pre>
             </Win>
+
+            <Win title="clock.exe">
+              <Clock />
+            </Win>
+
+            <Win title="post-it.app">
+              <div className="relative pt-2">
+                <StickyNote />
+              </div>
+            </Win>
           </aside>
 
           {/* CENTER CONTENT */}
