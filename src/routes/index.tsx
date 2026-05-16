@@ -618,31 +618,7 @@ function Index() {
           {/* RIGHT SIDEBAR */}
           <aside className="col-span-12 md:col-span-3 space-y-2">
             <Win title="shoutbox.cgi">
-              <div className="bevel-in p-1 bg-white retro-mono text-[13px] h-56 overflow-hidden">
-                {[
-                  ["★miku★", "ur shrine made me cry T_T", "#aa0066"],
-                  ["sword_brain", "ch.47 is PEAK btw", "#003366"],
-                  ["98xX", "where do i dl winamp skin??", "#006600"],
-                  ["nina.exe", "the chibi gif is so cute uwu", "#660066"],
-                  ["anonymouse", "linked u from my geocities", "#444"],
-                  ["mecha_dad", "PC-98 blueprints saved my life", "#0033aa"],
-                  ["yumi-chan", "<3 <3 <3 <3 <3", "#cc0000"],
-                  ["kenta", "rip swordboy he didnt deserve it", "#660000"],
-                  ["ghost", "...is anyone still here....?", "#888"],
-                ].map(([u, m, c]) => (
-                  <div key={m} className="border-b border-dotted border-[#999] py-[1px]">
-                    <span className="font-bold" style={{ color: c }}>{u}:</span>{" "}
-                    <span>{m}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-1 flex gap-1">
-                <input
-                  className="bevel-in flex-1 px-1 text-[12px] retro-mono bg-[#f0f0f0]"
-                  placeholder="say something..."
-                />
-                <button className="bevel-out px-2 text-[11px] font-bold active:bevel-in">post!</button>
-              </div>
+              <Shoutbox />
             </Win>
 
             <Win title="under_construction.gif">
