@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState, useRef } from "react";
 import mangaCollage from "@/assets/manga-collage.jpg";
 import thumb1 from "@/assets/thumb1.jpg";
 import thumb2 from "@/assets/thumb2.jpg";
