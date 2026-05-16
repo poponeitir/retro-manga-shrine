@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState, useRef } from "react";
 import mangaCollage from "@/assets/manga-collage.jpg";
 import thumb1 from "@/assets/thumb1.jpg";
 import thumb2 from "@/assets/thumb2.jpg";
@@ -88,6 +89,146 @@ function AsciiBar({ value, label }: { value: number; label: string }) {
         <span className="text-[#888]">{"░".repeat(total - filled)}</span>]
       </div>
     </div>
+  );
+}
+
+function Clock() {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  const hh = pad(now.getHours());
+  const mm = pad(now.getMinutes());
+  const ss = pad(now.getSeconds());
+  const dateStr = `${now.getFullYear()}/${pad(now.getMonth() + 1)}/${pad(now.getDate())}`;
+  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  return (
+    <div className="bevel-in p-2 bg-[#0a0a18] text-center">
+      <div
+        className="retro-mono text-[#00ff66] text-[28px] leading-none tracking-widest"
+        style={{ textShadow: "0 0 6px #00ff66" }}
+      >
+        {hh}:{mm}<span className="blink">:</span>{ss}
+      </div>
+      <div className="pixel text-[#0ff] mt-1">{dateStr} ✦ {days[now.getDay()]}</div>
+      <div className="pixel text-[#888] text-[9px] mt-[2px]">SYSTEM CLOCK // JST-ish</div>
+    </div>
+  );
+}
+
+function StickyNote() {
+  const [text, setText] = useState(
+    "don't forget:\n- scan ch.48\n- mirror webring\n- feed the goldfish ✿\n- buy more floppies",
+  );
+  return (
+    <div
+      className="p-3 text-[13px] leading-snug"
+      style={{
+        background: "#fff79a",
+        backgroundImage:
+          "repeating-linear-gradient(0deg, transparent 0 17px, rgba(0,0,0,0.06) 17px 18px)",
+        boxShadow: "3px 3px 0 rgba(0,0,0,0.25), inset 0 0 0 1px rgba(0,0,0,0.15)",
+        transform: "rotate(-1.5deg)",
+        fontFamily: "'Comic Sans MS', 'Marker Felt', cursive",
+        color: "#222",
+      }}
+    >
+      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-12 h-3 bg-[#ff6b6b] opacity-80 rotate-[-3deg] shadow" />
+      <div className="font-bold text-[#660000] mb-1">✎ post-it.txt</div>
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        className="w-full bg-transparent outline-none resize-none"
+        rows={6}
+        style={{ fontFamily: "inherit", color: "inherit" }}
+      />
+    </div>
+  );
+}
+
+type ShoutMsg = { user: string; msg: string; color: string; time: string };
+function Shoutbox() {
+  const [msgs, setMsgs] = useState<ShoutMsg[]>([
+    { user: "★miku★", msg: "ur shrine made me cry T_T", color: "#aa0066", time: "03:14" },
+    { user: "sword_brain", msg: "ch.47 is PEAK btw", color: "#003366", time: "03:02" },
+    { user: "98xX", msg: "where do i dl winamp skin??", color: "#006600", time: "02:48" },
+    { user: "nina.exe", msg: "the chibi gif is so cute uwu", color: "#660066", time: "02:31" },
+    { user: "anonymouse", msg: "linked u from my geocities", color: "#444", time: "01:55" },
+    { user: "mecha_dad", msg: "PC-98 blueprints saved my life", color: "#0033aa", time: "01:12" },
+    { user: "yumi-chan", msg: "<3 <3 <3 <3 <3", color: "#cc0000", time: "00:47" },
+    { user: "ghost", msg: "...is anyone still here....?", color: "#888", time: "00:03" },
+  ]);
+  const [name, setName] = useState("anon");
+  const [text, setText] = useState("");
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (listRef.current) listRef.current.scrollTop = 0;
+  }, [msgs]);
+
+  const colors = ["#aa0066", "#003366", "#006600", "#660066", "#cc0000", "#0033aa", "#660000"];
+
+  const post = () => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    const now = new Date();
+    const t = `${now.getHours().toString().padStart(2, "0")}:${now
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    setMsgs((m) => [
+      { user: name.trim() || "anon", msg: trimmed.slice(0, 140), color, time: t },
+      ...m,
+    ]);
+    setText("");
+  };
+
+  return (
+    <>
+      <div
+        ref={listRef}
+        className="bevel-in p-1 bg-white retro-mono text-[13px] h-56 overflow-auto"
+      >
+        {msgs.map((m, i) => (
+          <div key={i} className="border-b border-dotted border-[#999] py-[1px]">
+            <span className="text-[10px] text-[#888]">[{m.time}]</span>{" "}
+            <span className="font-bold" style={{ color: m.color }}>
+              {m.user}:
+            </span>{" "}
+            <span>{m.msg}</span>
+          </div>
+        ))}
+      </div>
+      <div className="mt-1 flex gap-1">
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value.slice(0, 12))}
+          className="bevel-in w-16 px-1 text-[12px] retro-mono bg-[#f0f0f0]"
+          placeholder="name"
+        />
+        <input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && post()}
+          className="bevel-in flex-1 px-1 text-[12px] retro-mono bg-[#f0f0f0]"
+          placeholder="say something..."
+          maxLength={140}
+        />
+        <button
+          onClick={post}
+          className="bevel-out px-2 text-[11px] font-bold active:bevel-in"
+        >
+          post!
+        </button>
+      </div>
+      <div className="pixel text-[#444] text-[9px] mt-[2px] flex justify-between">
+        <span>{msgs.length} shouts logged</span>
+        <span>{140 - text.length} chars left</span>
+      </div>
+    </>
   );
 }
 
@@ -322,6 +463,16 @@ function Index() {
    \___/`}
               </pre>
             </Win>
+
+            <Win title="clock.exe">
+              <Clock />
+            </Win>
+
+            <Win title="post-it.app">
+              <div className="relative pt-2">
+                <StickyNote />
+              </div>
+            </Win>
           </aside>
 
           {/* CENTER CONTENT */}
@@ -467,31 +618,7 @@ function Index() {
           {/* RIGHT SIDEBAR */}
           <aside className="col-span-12 md:col-span-3 space-y-2">
             <Win title="shoutbox.cgi">
-              <div className="bevel-in p-1 bg-white retro-mono text-[13px] h-56 overflow-hidden">
-                {[
-                  ["★miku★", "ur shrine made me cry T_T", "#aa0066"],
-                  ["sword_brain", "ch.47 is PEAK btw", "#003366"],
-                  ["98xX", "where do i dl winamp skin??", "#006600"],
-                  ["nina.exe", "the chibi gif is so cute uwu", "#660066"],
-                  ["anonymouse", "linked u from my geocities", "#444"],
-                  ["mecha_dad", "PC-98 blueprints saved my life", "#0033aa"],
-                  ["yumi-chan", "<3 <3 <3 <3 <3", "#cc0000"],
-                  ["kenta", "rip swordboy he didnt deserve it", "#660000"],
-                  ["ghost", "...is anyone still here....?", "#888"],
-                ].map(([u, m, c]) => (
-                  <div key={m} className="border-b border-dotted border-[#999] py-[1px]">
-                    <span className="font-bold" style={{ color: c }}>{u}:</span>{" "}
-                    <span>{m}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-1 flex gap-1">
-                <input
-                  className="bevel-in flex-1 px-1 text-[12px] retro-mono bg-[#f0f0f0]"
-                  placeholder="say something..."
-                />
-                <button className="bevel-out px-2 text-[11px] font-bold active:bevel-in">post!</button>
-              </div>
+              <Shoutbox />
             </Win>
 
             <Win title="under_construction.gif">
