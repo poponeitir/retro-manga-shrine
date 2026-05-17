@@ -7,6 +7,8 @@ import thumb3 from "@/assets/thumb3.jpg";
 import thumb4 from "@/assets/thumb4.jpg";
 import thumb5 from "@/assets/thumb5.jpg";
 import thumb6 from "@/assets/thumb6.jpg";
+import { MediaUploader } from "@/components/MediaUploader";
+import { useCustomBg, useCustomGallery } from "@/lib/media-store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -235,6 +237,23 @@ function Shoutbox() {
 /* ---------- page ---------- */
 
 function Index() {
+  const [customBg] = useCustomBg();
+  const { images: customGallery } = useCustomGallery();
+  const bgUrl = customBg ?? mangaCollage;
+
+  const defaultGallery: Array<[string, string, string, string, string]> = [
+    [thumb4, "swrdboy_07.gif", "Lone Blade Vol.7", "shounen / action", "1994"],
+    [thumb2, "mecha_cp38.gif", "Project CP-38", "mecha / cyberpunk", "1987"],
+    [thumb3, "yume_chan.gif", "Yume-chan Diary", "shojo / slice", "1996"],
+    [thumb5, "netgrl_v2.gif", "Net Terminal Girl", "cyberpunk", "1998"],
+    [thumb6, "magik_03.gif", "Magical Stardust 3", "mahou shojo", "1995"],
+    [thumb1, "chibi_h.gif", "Chibi Hours", "comedy / sd", "1999"],
+  ];
+  const customRows: Array<[string, string, string, string, string]> = customGallery.map(
+    (src, i) => [src, `user_${String(i + 1).padStart(3, "0")}.jpg`, `My Upload #${i + 1}`, "user / custom", "20XX"],
+  );
+  const galleryRows = [...customRows, ...defaultGallery];
+
   const navItems = [
     "★ HOME",
     "GALLERY",
@@ -298,7 +317,7 @@ function Index() {
         aria-hidden
         className="pointer-events-none fixed inset-0 z-0"
         style={{
-          backgroundImage: `url(${mangaCollage})`,
+          backgroundImage: `url(${bgUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.20,
@@ -537,14 +556,7 @@ function Index() {
                     </tr>
                   </thead>
                   <tbody className="retro-mono text-[14px]">
-                    {[
-                      [thumb4, "swrdboy_07.gif", "Lone Blade Vol.7", "shounen / action", "1994"],
-                      [thumb2, "mecha_cp38.gif", "Project CP-38", "mecha / cyberpunk", "1987"],
-                      [thumb3, "yume_chan.gif", "Yume-chan Diary", "shojo / slice", "1996"],
-                      [thumb5, "netgrl_v2.gif", "Net Terminal Girl", "cyberpunk", "1998"],
-                      [thumb6, "magik_03.gif", "Magical Stardust 3", "mahou shojo", "1995"],
-                      [thumb1, "chibi_h.gif", "Chibi Hours", "comedy / sd", "1999"],
-                    ].map(([img, file, title, genre, yr], idx) => (
+                    {galleryRows.map(([img, file, title, genre, yr], idx) => (
                       <tr key={file as string} className={`hover:bg-[#c4e800] ${idx % 2 === 0 ? "bg-[#eee]" : "bg-white"}`}>
                         <td className="border border-black align-top">
                           <div className="bevel-in p-[2px] inline-block bg-white">
@@ -554,7 +566,7 @@ function Index() {
                               width={64}
                               height={64}
                               loading="lazy"
-                              className="block w-16 h-16 object-cover grayscale"
+                              className={`block w-16 h-16 object-cover ${idx < customGallery.length ? "" : "grayscale"}`}
                               style={{ imageRendering: "pixelated" }}
                             />
                           </div>
@@ -571,7 +583,7 @@ function Index() {
                   </tbody>
                 </table>
                 <div className="mt-1 pixel flex justify-between text-[#444]">
-                  <span>showing 6 of 482 entries</span>
+                  <span>showing {galleryRows.length} of {482 + customGallery.length} entries</span>
                   <span>page 01 / 81 → <a href="#" className="win-link">next»</a></span>
                 </div>
               </div>
@@ -617,6 +629,10 @@ function Index() {
 
           {/* RIGHT SIDEBAR */}
           <aside className="col-span-12 md:col-span-3 space-y-2">
+            <Win title="media_uploader.exe — ★ NEW ★">
+              <MediaUploader />
+            </Win>
+
             <Win title="shoutbox.cgi">
               <Shoutbox />
             </Win>
