@@ -566,7 +566,7 @@ function Index() {
                               width={64}
                               height={64}
                               loading="lazy"
-                              className="block w-16 h-16 object-cover grayscale"
+                              className={`block w-16 h-16 object-cover ${idx < customGallery.length ? "" : "grayscale"}`}
                               style={{ imageRendering: "pixelated" }}
                             />
                           </div>
