@@ -629,6 +629,10 @@ function Index() {
 
           {/* RIGHT SIDEBAR */}
           <aside className="col-span-12 md:col-span-3 space-y-2">
+            <Win title="media_uploader.exe — ★ NEW ★">
+              <MediaUploader />
+            </Win>
+
             <Win title="shoutbox.cgi">
               <Shoutbox />
             </Win>
