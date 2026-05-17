@@ -583,7 +583,7 @@ function Index() {
                   </tbody>
                 </table>
                 <div className="mt-1 pixel flex justify-between text-[#444]">
-                  <span>showing 6 of 482 entries</span>
+                  <span>showing {galleryRows.length} of {482 + customGallery.length} entries</span>
                   <span>page 01 / 81 → <a href="#" className="win-link">next»</a></span>
                 </div>
               </div>
