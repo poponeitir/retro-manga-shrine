@@ -556,14 +556,7 @@ function Index() {
                     </tr>
                   </thead>
                   <tbody className="retro-mono text-[14px]">
-                    {[
-                      [thumb4, "swrdboy_07.gif", "Lone Blade Vol.7", "shounen / action", "1994"],
-                      [thumb2, "mecha_cp38.gif", "Project CP-38", "mecha / cyberpunk", "1987"],
-                      [thumb3, "yume_chan.gif", "Yume-chan Diary", "shojo / slice", "1996"],
-                      [thumb5, "netgrl_v2.gif", "Net Terminal Girl", "cyberpunk", "1998"],
-                      [thumb6, "magik_03.gif", "Magical Stardust 3", "mahou shojo", "1995"],
-                      [thumb1, "chibi_h.gif", "Chibi Hours", "comedy / sd", "1999"],
-                    ].map(([img, file, title, genre, yr], idx) => (
+                    {galleryRows.map(([img, file, title, genre, yr], idx) => (
                       <tr key={file as string} className={`hover:bg-[#c4e800] ${idx % 2 === 0 ? "bg-[#eee]" : "bg-white"}`}>
                         <td className="border border-black align-top">
                           <div className="bevel-in p-[2px] inline-block bg-white">
