@@ -1,30 +1,67 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   useCustomBg,
   useCustomGallery,
   fileToDataUrl,
 } from "@/lib/media-store";
+import { ImageCropper } from "@/components/ImageCropper";
+
+type Pending =
+  | { kind: "bg"; src: string }
+  | { kind: "gallery"; queue: string[] }
+  | null;
 
 export function MediaUploader() {
   const [bg, setBg] = useCustomBg();
   const { images, add, remove, clear } = useCustomGallery();
   const bgRef = useRef<HTMLInputElement>(null);
   const galRef = useRef<HTMLInputElement>(null);
+  const [pending, setPending] = useState<Pending>(null);
 
   const onBg = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
-    if (!f) return;
-    setBg(await fileToDataUrl(f));
     e.target.value = "";
+    if (!f) return;
+    setPending({ kind: "bg", src: await fileToDataUrl(f) });
   };
 
   const onGallery = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
+    e.target.value = "";
     if (!files.length) return;
     const urls = await Promise.all(files.map(fileToDataUrl));
-    add(urls);
-    e.target.value = "";
+    setPending({ kind: "gallery", queue: urls });
   };
+
+  const handleConfirm = (cropped: string) => {
+    if (!pending) return;
+    if (pending.kind === "bg") {
+      setBg(cropped);
+      setPending(null);
+      return;
+    }
+    // gallery queue: save current crop, advance
+    add([cropped]);
+    const rest = pending.queue.slice(1);
+    setPending(rest.length ? { kind: "gallery", queue: rest } : null);
+  };
+
+  const handleCancel = () => {
+    if (pending?.kind === "gallery") {
+      const rest = pending.queue.slice(1);
+      setPending(rest.length ? { kind: "gallery", queue: rest } : null);
+    } else {
+      setPending(null);
+    }
+  };
+
+  const cropperSrc =
+    pending?.kind === "bg"
+      ? pending.src
+      : pending?.kind === "gallery"
+      ? pending.queue[0]
+      : null;
+  const cropperAspect = pending?.kind === "bg" ? 16 / 9 : 1;
 
   return (
     <div className="space-y-2 retro-mono text-[12px]">
@@ -64,7 +101,7 @@ export function MediaUploader() {
           </div>
         )}
         <div className="pixel text-[10px] text-[#444] mt-1">
-          sube tu collage de manga, se aplica al fondo automáticamente.
+          sube tu collage, recorta 16:9 y se aplica al fondo.
         </div>
       </div>
 
@@ -119,13 +156,23 @@ export function MediaUploader() {
           </div>
         )}
         <div className="pixel text-[10px] text-[#444] mt-1">
-          aparecen primero en manga_gallery_grid.htm
+          recorta cuadrado 1:1 · aparecen primero en la galería
         </div>
       </div>
 
       <div className="pixel text-[9px] text-[#444]">
         ✦ guardado en localStorage del navegador. no se sube a internet.
       </div>
+
+      {cropperSrc && (
+        <ImageCropper
+          key={cropperSrc}
+          src={cropperSrc}
+          aspect={cropperAspect}
+          onCancel={handleCancel}
+          onConfirm={handleConfirm}
+        />
+      )}
     </div>
   );
 }
