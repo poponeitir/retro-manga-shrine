@@ -237,6 +237,23 @@ function Shoutbox() {
 /* ---------- page ---------- */
 
 function Index() {
+  const [customBg] = useCustomBg();
+  const { images: customGallery } = useCustomGallery();
+  const bgUrl = customBg ?? mangaCollage;
+
+  const defaultGallery: Array<[string, string, string, string, string]> = [
+    [thumb4, "swrdboy_07.gif", "Lone Blade Vol.7", "shounen / action", "1994"],
+    [thumb2, "mecha_cp38.gif", "Project CP-38", "mecha / cyberpunk", "1987"],
+    [thumb3, "yume_chan.gif", "Yume-chan Diary", "shojo / slice", "1996"],
+    [thumb5, "netgrl_v2.gif", "Net Terminal Girl", "cyberpunk", "1998"],
+    [thumb6, "magik_03.gif", "Magical Stardust 3", "mahou shojo", "1995"],
+    [thumb1, "chibi_h.gif", "Chibi Hours", "comedy / sd", "1999"],
+  ];
+  const customRows: Array<[string, string, string, string, string]> = customGallery.map(
+    (src, i) => [src, `user_${String(i + 1).padStart(3, "0")}.jpg`, `My Upload #${i + 1}`, "user / custom", "20XX"],
+  );
+  const galleryRows = [...customRows, ...defaultGallery];
+
   const navItems = [
     "★ HOME",
     "GALLERY",
