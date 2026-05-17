@@ -1,0 +1,29 @@
+name: Generar Build para Neocities
+
+on:
+  workflow_dispatch: # Esto nos da un botón para activarlo manualmente
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Compilar sitio estatico
+        run: npm run build
+
+      - name: Subir carpeta dist lista
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitio-neocities
+          path: dist/
