@@ -317,7 +317,7 @@ function Index() {
         aria-hidden
         className="pointer-events-none fixed inset-0 z-0"
         style={{
-          backgroundImage: `url(${mangaCollage})`,
+          backgroundImage: `url(${bgUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.20,
