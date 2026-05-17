@@ -7,6 +7,8 @@ import thumb3 from "@/assets/thumb3.jpg";
 import thumb4 from "@/assets/thumb4.jpg";
 import thumb5 from "@/assets/thumb5.jpg";
 import thumb6 from "@/assets/thumb6.jpg";
+import { MediaUploader } from "@/components/MediaUploader";
+import { useCustomBg, useCustomGallery } from "@/lib/media-store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
